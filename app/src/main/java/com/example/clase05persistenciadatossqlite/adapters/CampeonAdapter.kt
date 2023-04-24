@@ -1,6 +1,7 @@
 package com.example.clase05persistenciadatossqlite.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import com.example.clase05persistenciadatossqlite.R
 import com.example.clase05persistenciadatossqlite.db.ManejadorBaseDatos
 import com.example.clase05persistenciadatossqlite.interfaces.juegosInterface
 import com.example.clase05persistenciadatossqlite.modelos.Campeon
-
 class CampeonAdapter(campeones: ArrayList<Campeon>, context: Context, juegosInterface: juegosInterface):
     RecyclerView.Adapter<CampeonAdapter.ContenedorDeVista>() {
     var innerCampeon: ArrayList<Campeon> = campeones
@@ -47,17 +47,13 @@ class CampeonAdapter(campeones: ArrayList<Campeon>, context: Context, juegosInte
                 baseDatos.eliminar("id = ? ", argumentosWhere)
                 juegoInterface?.juegoEliminado()
             }
-
-
-
-
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContenedorDeVista {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_listado, parent, false)
+            .inflate(R.layout.row_campeon, parent, false)
 
         return  ContenedorDeVista(view)
     }
@@ -67,7 +63,7 @@ class CampeonAdapter(campeones: ArrayList<Campeon>, context: Context, juegosInte
         holder.id = campeon.id
         holder.campeon = campeon
         holder.tvCategoria. text = campeon.categoria
-        holder.tvNombreJuego.text  = campeon.nombre
+        holder.tvNombreJuego.text  = campeon.nombre.toString()
 
     }
 

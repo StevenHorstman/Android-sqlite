@@ -13,7 +13,10 @@ import android.view.Menu
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.clase05persistenciadatossqlite.R
+import com.example.clase05persistenciadatossqlite.adapters.CampeonAdapter
 import com.example.clase05persistenciadatossqlite.adapters.JuegosAdapter
 import com.example.clase05persistenciadatossqlite.db.ManejadorBaseDatos
 import com.example.clase05persistenciadatossqlite.interfaces.juegosInterface
@@ -23,7 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListadoActivity : AppCompatActivity(), juegosInterface {
 
-    private lateinit var listView: ListView
+    private lateinit var recycler: RecyclerView
     private var listaCampeones = ArrayList<Campeon>()
     private lateinit var fab: FloatingActionButton
     private val ORDENAR_POR_NOMBRE : String  = "nombre"
@@ -39,7 +42,7 @@ class ListadoActivity : AppCompatActivity(), juegosInterface {
         traerMisJuegos()
     }
     private fun inicializarVistas(){
-        listView = findViewById(R.id.listView)
+        recycler = findViewById(R.id.recycler)
         fab = findViewById(R.id.fab)
     }
 
@@ -107,8 +110,10 @@ class ListadoActivity : AppCompatActivity(), juegosInterface {
                 listaCampeones.add(campeon)
             }while(cursor.moveToNext())
         }
-        val adapter: JuegosAdapter = JuegosAdapter(this, listaCampeones,this)
-        listView.adapter = adapter
+        val adapter  = CampeonAdapter( listaCampeones,this, this)
+       val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recycler.adapter = adapter
+        recycler.layoutManager = manager
 
     }
 
