@@ -16,18 +16,18 @@
 
         <TextView
 
-            android:id="@+id/etTitle"
+            android:id="@+id/tvNombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Nombre del Juego"
+            android:text="Nombre del campeon"
             android:textColor="@color/purple_700"
             android:textSize="32sp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
 
         <TextView
-            android:id="@+id/tvContent"
+            android:id="@+id/tvCategoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
