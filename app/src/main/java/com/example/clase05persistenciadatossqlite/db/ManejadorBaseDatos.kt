@@ -9,20 +9,20 @@ import android.database.sqlite.SQLiteQueryBuilder
 
 class ManejadorBaseDatos {
 
-    val nombreBaseDatos = "MisJuegos"
-    val tablaJuegos = "juegos"
+    val nombreBaseDatos = "CampeonesLoL"
+    val tablaJuegos = "campeones"
     val columnaID = "id"
-    val columnaNombreJuego = "nombre"
-    val columnaPrecio = "precio"
-    val columnaConsola = "consola"
+    val columnaNombreCampeon = "nombre"
+    val columnaCategoria = "categoria"
+    val columnaRol = "rol"
 
     val versionDB = 1
 
     val creacionTablaJuegos = "CREATE TABLE IF NOT EXISTS "+tablaJuegos +
             "(  " + columnaID + " INTEGER PRIMARY KEY AUTOINCREMENT," + //nombre columna y tipo de dato
-            "  " + columnaNombreJuego + " TEXT NOT NULL," +
-            "  " + columnaPrecio + " REAL," +
-            "  " + columnaConsola + " TEXT)"
+            "  " + columnaNombreCampeon + " TEXT NOT NULL," +
+            "  " + columnaCategoria + " TEXT," +
+            "  " + columnaRol + " TEXT)"
 
     var misQuerys: SQLiteDatabase
 
