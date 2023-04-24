@@ -65,6 +65,9 @@ class CampeonAdapter(campeones: ArrayList<Campeon>, context: Context, juegosInte
     override fun onBindViewHolder(holder: ContenedorDeVista, position: Int) {
         val campeon: Campeon = innerCampeon.get(position)
         holder.id = campeon.id
+        holder.campeon = campeon
+        holder.tvCategoria. text = campeon.categoria
+        holder.tvNombreJuego.text  = campeon.nombre
 
     }
 
