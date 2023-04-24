@@ -22,47 +22,48 @@ class AgregarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     private  lateinit var etJuego: EditText
     private  lateinit var etPrecio: EditText
     private  lateinit var spConsola: Spinner
-    private val consolas = arrayOf("Xbox", "Nintendo", "Playstation", "MultiPlataforma", "P.C")
-    private var consolaSeleccionada: String = ""
+    private val roles = arrayOf("Top", "Mid", "Jungle", "Bot", "Support")
+    private var rolSeleccionada: String = ""
     private  lateinit var tvJuego: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)
         inicializarVistas()
 
-        val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, consolas)
+        val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, roles)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spConsola.adapter = adapter
         spConsola.onItemSelectedListener = this
         fabAgregar.setOnClickListener{
-            insertarJuego( etJuego.text.toString(),  etPrecio.text.toString().toFloat(),consolaSeleccionada)
+            val nombre = etJuego.text.toString()
+            val categoria = etPrecio.text.toString()
+            insertarJuego(nombre, categoria, rolSeleccionada)
         }
     }
 
-    val columnaID = "id"
-    val columnaNombreJuego = "nombre"
-    val columnaPrecio = "precio"
-    val columnaConsola = "consola"
+    val columnaNombreCampeon = "nombre"
+    val columnaCategoria = "categoria"
+    val columnaRol = "rol"
     var id: Int = 0
-    private fun insertarJuego(nombreJuego: String, precio: Float, consola: String){
-       if(!TextUtils.isEmpty(consola)) {
+    private fun insertarJuego(nombreCampeon: String, categoria: String, rol: String){
+       if(!TextUtils.isEmpty(rol)) {
            val baseDatos = ManejadorBaseDatos(this)
            //  val columnas = arrayOf(columnaID, columnaNombreJuego, columnaPrecio, columnaConsola)
            val contenido = ContentValues()
-           contenido.put(columnaNombreJuego, nombreJuego)
-           contenido.put(columnaPrecio, precio)
-           contenido.put(columnaConsola, consola)
+           contenido.put(columnaNombreCampeon, nombreCampeon)
+           contenido.put(columnaCategoria, categoria)
+           contenido.put(columnaRol, rol)
            //guardar imagen
             id = baseDatos.insertar(contenido).toInt()
            if (id > 0) {
-               Toast.makeText(this, "juego " + nombreJuego + " agregado", Toast.LENGTH_LONG).show()
+               Toast.makeText(this, "Campeon" + nombreCampeon + " agregado", Toast.LENGTH_LONG).show()
                finish()
            } else
                Toast.makeText(this, "Ups no se pudo guardar el juego", Toast.LENGTH_LONG).show()
            baseDatos.cerrarConexion()
        }else{
-           Snackbar.make(tvJuego,"Favor seleccionar una consola", 0).show()
+           Snackbar.make(tvJuego,"Favor seleccionar una Rol", 0).show()
        }
     }
 
@@ -75,7 +76,7 @@ class AgregarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener 
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, id: Long) {
-        consolaSeleccionada = consolas[position]
+        rolSeleccionada = roles[position]
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

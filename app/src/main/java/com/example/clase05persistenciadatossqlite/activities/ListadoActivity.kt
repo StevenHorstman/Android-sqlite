@@ -17,16 +17,17 @@ import com.example.clase05persistenciadatossqlite.R
 import com.example.clase05persistenciadatossqlite.adapters.JuegosAdapter
 import com.example.clase05persistenciadatossqlite.db.ManejadorBaseDatos
 import com.example.clase05persistenciadatossqlite.interfaces.juegosInterface
+import com.example.clase05persistenciadatossqlite.modelos.Campeon
 import com.example.clase05persistenciadatossqlite.modelos.Juego
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListadoActivity : AppCompatActivity(), juegosInterface {
 
     private lateinit var listView: ListView
-    private var listaDeJuegos = ArrayList<Juego>()
+    private var listaCampeones = ArrayList<Campeon>()
     private lateinit var fab: FloatingActionButton
     private val ORDENAR_POR_NOMBRE : String  = "nombre"
-    val columnas = arrayOf("id", "nombre","precio", "consola" )
+    val columnas = arrayOf("id", "nombre", "categoria", "rol" )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listado)
@@ -92,21 +93,21 @@ class ListadoActivity : AppCompatActivity(), juegosInterface {
 
     @SuppressLint("Range")
     fun recorrerResultados(cursor : Cursor){
-        if(listaDeJuegos.size > 0)
-            listaDeJuegos.clear()
+        if(listaCampeones.size > 0)
+            listaCampeones.clear()
 
         if(cursor.moveToFirst()){
             do{
                 val juego_id = cursor.getInt(cursor.getColumnIndex("id"))
                 val nombre = cursor.getString(cursor.getColumnIndex("nombre"))
-                val precio = cursor.getFloat(cursor.getColumnIndex("precio"))
-                val consola = cursor.getString(cursor.getColumnIndex("consola"))
-                val juego: Juego
-                juego = Juego(juego_id, nombre, precio, consola)
-                listaDeJuegos.add(juego)
+                val precio = cursor.getString(cursor.getColumnIndex("categoria"))
+                val consola = cursor.getString(cursor.getColumnIndex("rol"))
+                val campeon: Campeon
+                campeon = Campeon(juego_id, nombre, precio, consola)
+                listaCampeones.add(campeon)
             }while(cursor.moveToNext())
         }
-        val adapter: JuegosAdapter = JuegosAdapter(this, listaDeJuegos,this)
+        val adapter: JuegosAdapter = JuegosAdapter(this, listaCampeones,this)
         listView.adapter = adapter
 
     }
@@ -116,12 +117,12 @@ class ListadoActivity : AppCompatActivity(), juegosInterface {
         traerMisJuegos()
     }
 
-    override fun editarJuego(juego: Juego) {
-        Log.d("PRUEBAS", "editar Juego "+juego.id)
+    override fun editarJuego(campeon: Campeon) {
+        Log.d("PRUEBAS", "editar Juego "+ campeon.id)
         val intent = Intent(this, EditarActivity::class.java)
-        intent.putExtra("id",juego.id)
-        intent.putExtra("nombre",juego.nombre)
-        intent.putExtra("consola",juego.consola)
+        intent.putExtra("id",campeon.id)
+        intent.putExtra("nombre", campeon.nombre)
+        intent.putExtra("rol", campeon.rol)
         startActivity(intent)
     }
 

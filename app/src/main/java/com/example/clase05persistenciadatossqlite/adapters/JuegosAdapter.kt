@@ -9,10 +9,11 @@ import android.widget.TextView
 import com.example.clase05persistenciadatossqlite.R
 import com.example.clase05persistenciadatossqlite.db.ManejadorBaseDatos
 import com.example.clase05persistenciadatossqlite.interfaces.juegosInterface
+import com.example.clase05persistenciadatossqlite.modelos.Campeon
 import com.example.clase05persistenciadatossqlite.modelos.Juego
 
 
-class JuegosAdapter(contexto: Context, var listadDejuegos: ArrayList<Juego>, juegoInterface: juegosInterface) : BaseAdapter() {
+class JuegosAdapter(contexto: Context, var listadDejuegos: ArrayList<Campeon>, juegoInterface: juegosInterface) : BaseAdapter() {
 
     var contexto: Context? = contexto
     var juegoInterface: juegosInterface? = juegoInterface
@@ -33,18 +34,18 @@ class JuegosAdapter(contexto: Context, var listadDejuegos: ArrayList<Juego>, jue
         //usar vista reciclado para eficientar
         var convertView: View?= p1
         if(convertView == null){
-            convertView = View.inflate(contexto, R.layout.row_juego, null)
+            convertView = View.inflate(contexto, R.layout.row_campeon, null)
         }
 
         val juego = listadDejuegos[p0]
 
         val miVista = convertView!!
-        val tvTitle: TextView = miVista.findViewById(R.id.etTitle)
-        val tvContent: TextView = miVista.findViewById(R.id.tvContent)
+        val tvNombre: TextView = miVista.findViewById(R.id.tvNombre)
+        val tvCategoria: TextView = miVista.findViewById(R.id.tvCategoria)
         val img01: ImageView = miVista.findViewById(R.id.img01)
         val img02: ImageView = miVista.findViewById(R.id.img02)
-        tvTitle.text = juego.nombre
-        tvContent.text = juego.consola
+        tvNombre.text = juego.nombre
+        tvCategoria.text = juego.categoria
         //borrar
         img02.setOnClickListener(){
             //eliminar
